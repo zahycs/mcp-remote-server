@@ -164,7 +164,7 @@ def get_example_content(subcategory, filename):
         content = f.read()
     
     return {
-        "content": content,
+        "content": [content],
         "path": os.path.relpath(file_path, BASE_DIR)
     }
 
