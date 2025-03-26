@@ -385,7 +385,7 @@ def handle_tools_list():
     return {
         "tools": [
             {
-                "name": name,
+                "name": name,  # Use the original tool name without prefix
                 "description": info["description"],
                 "parameters": {
                     "type": "object",
@@ -398,11 +398,15 @@ def handle_tools_list():
 
 def handle_tools_call(params: Dict[str, Any]):
     """Handle tools/call method"""
-    tool_name = params.get("name")
-    tool_params = params.get("params", {})
+    tool_name = params.get("name", "")
+    tool_params = params.get("arguments", {})
     
     if not tool_name:
         return {"error": "Tool name not specified"}
+    
+    # Strip mcp0_ prefix if present
+    if tool_name.startswith("mcp0_"):
+        tool_name = tool_name[5:]  # Remove 'mcp0_' prefix
     
     if tool_name not in TOOLS:
         return {"error": f"Tool {tool_name} not found"}
