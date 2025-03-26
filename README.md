@@ -1,6 +1,6 @@
-# BluestoneApps MCP STDIO Server
+# BluestoneApps React Native MCP Server
 
-This server implements the Model Context Protocol (MCP) over STDIO, providing access to BluestoneApps coding standards and code examples directly within Windsurf IDE.
+This server implements the Model Context Protocol (MCP) over STDIO, providing access to BluestoneApps React Native coding standards and examples directly within Windsurf IDE.
 
 ## Features
 
@@ -19,15 +19,15 @@ pip install -r requirements.txt
 2. Configure Windsurf by adding the following to your MCP configuration file (`~/.codeium/windsurf/mcp_config.json`):
 ```json
 {
-  "defaultMcpServer": "bluestoneapps-stdio",
+  "defaultMcpServer": "bluestoneapps-react-native",
   "mcpServers": {
-    "bluestoneapps-stdio": {
+    "bluestoneapps-react-native": {
       "command": "/path/to/venv/bin/python",
       "args": [
-        "/path/to/simple_mcp_stdio.py"
+        "/path/to/react_native_mcp_server.py"
       ],
-      "description": "BluestoneApps Coding Standards and Examples (STDIO)",
-      "displayName": "BluestoneApps Development Standards (STDIO)"
+      "description": "BluestoneApps React Native Standards and Examples",
+      "displayName": "BluestoneApps React Native Development Standards"
     }
   }
 }
