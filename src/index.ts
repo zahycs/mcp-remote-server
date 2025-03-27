@@ -17,7 +17,7 @@ const CODE_EXAMPLES_DIR = path.join(RESOURCES_DIR, "code-examples");
 
 // Create server instance
 const server = new McpServer({
-  name: "bluestoneapps",
+  name: "bluestoneapps-react-native",
   version: "0.2.1",
   capabilities: {
     tools: {},
