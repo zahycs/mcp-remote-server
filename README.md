@@ -1,28 +1,34 @@
-# MCP Remote Server (Node.js Version)
+# BluestoneApps React Native MCP Server
 
-This is a Node.js implementation of the BluestoneApps Coding Standards and Examples MCP server.
+This is a Node.js implementation of the BluestoneApps React Native coding standards and examples MCP server. It provides standardized access to React Native best practices, code examples, and development patterns through the Model Context Protocol (MCP).
 
-## Overview
+## Prerequisites
 
-This MCP server provides access to React Native coding standards and code examples through the Model Context Protocol (MCP). It can be used with MCP clients like Windsurf IDE.
-
-## Features
-
-- Access to React Native coding standards
-- Component, hook, screen, service, and theme code examples
-- Fuzzy matching for finding examples by name
-- Full integration with the MCP protocol
+- Node.js (v16 or higher)
+- npm (v7 or higher)
+- TypeScript (installed globally)
 
 ## Installation
 
-1. Clone this repository
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/lallen30/mcp-remote-server.git
+   cd mcp-remote-server
+   ```
+
 2. Install dependencies:
    ```bash
    npm install
    ```
-3. Build the project:
+
+3. Install TypeScript globally (if not already installed):
    ```bash
-   npm run build
+   npm install -g typescript
+   ```
+
+4. Build the project:
+   ```bash
+   tsc
    ```
 
 ## Usage
@@ -30,39 +36,74 @@ This MCP server provides access to React Native coding standards and code exampl
 Start the server:
 
 ```bash
-npm start
+node build/index.js
 ```
 
-To use with MCP clients, configure them to connect to this server.
-
-## Tools
+## Available Tools
 
 The server provides the following tools:
 
-- `get_project_structure`: Get project structure standards
-- `get_api_communication`: Get API communication standards 
-- `get_component_design`: Get component design standards
-- `get_state_management`: Get state management standards
-- `get_component_example`: Get a specific component example
-- `get_hook_example`: Get a specific hook example
-- `get_service_example`: Get a specific service example 
-- `get_screen_example`: Get a specific screen example
-- `get_theme_example`: Get a specific theme example
-- `list_available_examples`: List all available code examples
+- `get_project_structure`: Get React Native project structure standards
+- `get_api_communication`: Get API communication best practices
+- `get_component_design`: Get component design patterns and standards
+- `get_state_management`: Get state management guidelines
+- `get_component_example`: Get example React Native components
+- `get_hook_example`: Get example custom React hooks
+- `get_service_example`: Get example service implementations
+- `get_screen_example`: Get example screen implementations
+- `get_theme_example`: Get example theme configurations
+- `list_available_examples`: List all available code examples by category
 
-## Configuring with MCP Clients
+## Configuring with Windsurf IDE
 
-For Windsurf IDE, update the `mcp_config.json` with:
+1. Locate your Windsurf IDE configuration file:
+   - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+   - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+2. Add the server configuration:
 
 ```json
 {
-  "servers": {
-    "bluestoneapps": {
+  "mcpServers": {
+    "bluestoneapps-react-native": {
       "command": "node",
-      "args": ["/path/to/build/index.js"],
-      "description": "BluestoneApps Coding Standards and Examples",
-      "displayName": "BluestoneApps MCP Server",
+      "args": ["/absolute/path/to/mcp-remote-server/build/index.js"],
+      "description": "BluestoneApps React Native Development Standards and Examples",
+      "displayName": "BluestoneApps React Native MCP Server",
       "timeout": 30000
     }
   }
 }
+```
+
+Make sure to replace `/absolute/path/to` with the actual path to your cloned repository.
+
+## Development
+
+To modify or extend the server:
+
+1. Make changes in the `src` directory
+2. Rebuild the project:
+   ```bash
+   tsc
+   ```
+3. Restart the server
+
+## Project Structure
+
+```
+├── src/                 # Source code
+├── build/               # Compiled JavaScript
+├── resources/           # Code examples and standards
+│   ├── code-examples/   # React Native code examples
+│   └── standards/       # Development standards
+└── package.json         # Project configuration
+```
+
+## Contributing
+
+Feel free to submit issues and pull requests to improve the server or add more examples and standards.
+
+## License
+
+MIT
