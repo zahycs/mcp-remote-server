@@ -4,201 +4,215 @@ BluestoneApps follows these standards for designing React Native components.
 
 ## Component Structure
 
-### Atomic Design Principles
+### Flat Component Organization
 
-We use the atomic design methodology to organize components:
-
-- **Atoms**: Smallest, indivisible components (Button, Input, Icon)
-- **Molecules**: Groups of atoms that work together (Form Field, Search Bar)
-- **Organisms**: Complex components composed of molecules (Header, Footer, Form)
-- **Templates**: Page-level component layouts without content
-- **Pages/Screens**: Specific instances of templates with real content
-
-### File Organization
+We use a flat component organization structure with all reusable components placed directly in the components directory:
 
 ```
 src/
 └── components/
-    ├── atoms/
-    │   ├── Button/
-    │   │   ├── Button.tsx
-    │   │   ├── Button.styles.ts
-    │   │   └── index.ts
-    │   └── ...
-    ├── molecules/
-    │   ├── FormField/
-    │   │   ├── FormField.tsx
-    │   │   ├── FormField.styles.ts
-    │   │   └── index.ts
-    │   └── ...
-    └── organisms/
-        ├── Header/
-        │   ├── Header.tsx
-        │   ├── Header.styles.ts
-        │   └── index.ts
-        └── ...
+    ├── Button.tsx
+    ├── ErrorBoundary.tsx
+    ├── LoadingSpinner.tsx
+    └── UpdateModal.tsx
 ```
+
+Screen-specific components may be placed within their respective screen directories when they are not meant to be reused across the application.
 
 ## Component Implementation
 
 ### Functional Components with TypeScript
 
-```typescript
-// src/components/atoms/Button/Button.tsx
-import React from 'react';
-import { TouchableOpacity, Text } from 'react-native';
-import { styles } from './Button.styles';
+We use functional components with TypeScript interfaces for props:
 
-export interface ButtonProps {
+```typescript
+// src/components/Button.tsx
+import React from 'react';
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ViewStyle,
+  TextStyle,
+  ActivityIndicator,
+} from 'react-native';
+
+interface ButtonProps {
   title: string;
   onPress: () => void;
-  variant?: 'primary' | 'secondary' | 'outline';
+  style?: ViewStyle;
+  textStyle?: TextStyle;
+  loading?: boolean;
   disabled?: boolean;
-  fullWidth?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
   title,
   onPress,
-  variant = 'primary',
+  style,
+  textStyle,
+  loading = false,
   disabled = false,
-  fullWidth = false,
 }) => {
   return (
     <TouchableOpacity
       style={[
         styles.button,
-        styles[variant],
-        fullWidth && styles.fullWidth,
-        disabled && styles.disabled,
+        style,
+        disabled && styles.disabledButton,
       ]}
       onPress={onPress}
-      disabled={disabled}
-      accessibilityRole="button"
-      accessibilityLabel={title}
+      disabled={disabled || loading}
     >
-      <Text style={[styles.text, styles[`${variant}Text`]]}>
-        {title}
-      </Text>
+      {loading ? (
+        <ActivityIndicator color="#fff" />
+      ) : (
+        <Text style={[styles.text, textStyle]}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };
-```
 
-### Separated Styles
-
-```typescript
-// src/components/atoms/Button/Button.styles.ts
-import { StyleSheet } from 'react-native';
-import { colors, spacing, typography } from '../../../theme';
-
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   button: {
-    paddingVertical: spacing.small,
-    paddingHorizontal: spacing.medium,
+    backgroundColor: '#007AFF',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  primary: {
-    backgroundColor: colors.primary,
-  },
-  secondary: {
-    backgroundColor: colors.secondary,
-  },
-  outline: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: colors.primary,
-  },
   text: {
-    ...typography.button,
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
-  primaryText: {
-    color: colors.white,
-  },
-  secondaryText: {
-    color: colors.white,
-  },
-  outlineText: {
-    color: colors.primary,
-  },
-  fullWidth: {
-    width: '100%',
-  },
-  disabled: {
-    opacity: 0.5,
+  disabledButton: {
+    backgroundColor: '#CCCCCC',
   },
 });
 ```
 
-### Index Export File
+### Inline Styles
+
+For simpler components, we define styles within the same file using StyleSheet.create(). For more complex components or screens, we may use a separate Styles.ts file in the same directory.
 
 ```typescript
-// src/components/atoms/Button/index.ts
-export * from './Button';
+// Example of styles in a separate file (for a screen component)
+// src/screens/PostLogin/BluestoneAppsAI/Styles.ts
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#FFFFFF',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  // Other styles...
+});
 ```
 
 ## Component Best Practices
 
-### 1. Props and PropTypes
+### 1. Props and TypeScript Interfaces
 
 - Use TypeScript interfaces for prop typing
 - Provide default values for optional props
-- Document props with JSDoc comments
-
-### 2. Component Composition
-
-- Prefer composition over inheritance
-- Use React Children pattern for flexible components
-- Design components to be reused and extended
+- Use optional chaining and nullish coalescing for safer prop access
 
 ```typescript
-// Example of component composition
-const Card = ({ children, header }) => (
-  <View style={styles.card}>
-    {header && <View style={styles.header}>{header}</View>}
-    <View style={styles.content}>{children}</View>
-  </View>
-);
+// Example of proper TypeScript interface usage
+interface LoadingSpinnerProps {
+  size?: 'small' | 'large';
+  color?: string;
+  text?: string;
+}
+
+export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  size = 'large',
+  color = '#007AFF',
+  text,
+}) => {
+  // Component implementation
+};
+```
+
+### 2. Error Handling
+
+- Implement error boundaries to catch and handle component errors
+- Use try/catch blocks for error handling in async operations
+- Provide meaningful feedback to users when errors occur
+
+```typescript
+// Example of an error boundary component
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    console.error('Component error:', error, errorInfo);
+  }
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+      return (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>Something went wrong</Text>
+        </View>
+      );
+    }
+    return this.props.children;
+  }
+}
 ```
 
 ### 3. State Management
 
-- Keep component state minimal and focused
-- Lift state up when multiple components need access
-- Use context for deeply nested component trees
-- Consider using custom hooks for complex state logic
+- Use useState and useEffect hooks for component-level state
+- Extract complex state logic into custom hooks
+- Use AsyncStorage for persistent data storage
+- Consider context API for state that needs to be shared across components
 
-### 4. Performance Optimization
+### 4. Performance Considerations
 
-- Use React.memo() for pure components
-- Implement useCallback() for event handlers
-- Utilize useMemo() for expensive calculations
-- Employ virtualized lists for long scrolling lists
-
-```typescript
-// Performance optimized component
-import React, { useCallback, memo } from 'react';
-
-const ListItem = memo(({ item, onSelect }) => {
-  const handlePress = useCallback(() => {
-    onSelect(item.id);
-  }, [item.id, onSelect]);
-
-  return (
-    <TouchableOpacity onPress={handlePress}>
-      <Text>{item.title}</Text>
-    </TouchableOpacity>
-  );
-});
-```
+- Memoize expensive calculations with useMemo
+- Use useCallback for event handlers passed to child components
+- Implement proper list rendering with FlatList or SectionList
+- Avoid unnecessary re-renders by using React.memo when appropriate
 
 ### 5. Accessibility
 
-- Implement proper accessibility props
+- Provide accessible labels for interactive elements
+- Ensure sufficient color contrast
+- Support dynamic text sizes
 - Test with screen readers
-- Support different text sizes
 - Ensure adequate color contrast
 
 ### 6. Testing

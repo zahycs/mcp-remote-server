@@ -11,7 +11,7 @@ import {
 import axios from 'axios';
 import { styles } from './Styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API } from '../../../helper/config';
+import { API } from '../../../config/apiConfig';
 
 const VerifyEmailScreen = ({ route, navigation }: any) => {
   const { registerData, otp } = route.params;

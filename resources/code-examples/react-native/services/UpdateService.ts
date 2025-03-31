@@ -1,7 +1,7 @@
 import { Platform, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { API } from '../helper/config';
+import { API } from '../config/apiConfig';
 import DeviceInfo from 'react-native-device-info';
 import { compareVersions } from 'compare-versions';
 

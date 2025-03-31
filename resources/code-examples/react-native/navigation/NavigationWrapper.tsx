@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, View, Text, StyleSheet } from 'react-native';
-import { NavigationMonitorService } from '../helper/NavigationMonitorService';
+import { NavigationMonitorService } from '../services/NavigationMonitorService';
 
 interface NavigationProps {
   navigation: any;

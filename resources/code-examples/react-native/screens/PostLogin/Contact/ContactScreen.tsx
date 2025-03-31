@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API } from '../../../helper/config';
-import axiosRequest from '../../../helper/axiosRequest';
+import { API } from '../../../config/apiConfig';
+import axiosRequest from '../../../utils/axiosUtils';
 import { styles } from './Styles';
 import { colors } from '../../../theme/colors';
 

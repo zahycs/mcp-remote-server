@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { styles } from './Styles';
-import userService from '../../../helper/userService';
+import userService from '../../../services/userService';
 
 interface FormData {
   first_name: string;

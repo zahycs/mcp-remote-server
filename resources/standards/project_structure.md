@@ -5,22 +5,19 @@ BluestoneApps recommends the following project structure for React Native applic
 ```
 project-name/
 ├── src/                    # Source code
-│   ├── api/                # API interaction files
 │   ├── assets/             # Static assets (images, fonts, etc.)
-│   ├── components/         # Reusable components
-│   │   ├── common/         # Shared components
-│   │   └── specific/       # Feature-specific components
+│   ├── components/         # Reusable UI components
+│   ├── config/             # Configuration files (API endpoints, constants)
 │   ├── hooks/              # Custom React hooks
 │   ├── navigation/         # Navigation configuration
 │   ├── screens/            # Screen components
+│   │   ├── PostLogin/      # Screens available after authentication
+│   │   └── PreLogin/       # Authentication and onboarding screens
 │   ├── services/           # Business logic services
-│   ├── store/              # State management
-│   │   ├── actions/        # Redux actions
-│   │   ├── reducers/       # Redux reducers
-│   │   └── slices/         # Redux Toolkit slices
 │   ├── theme/              # Theme definitions (colors, spacing, etc.)
+│   ├── types/              # TypeScript type definitions
 │   └── utils/              # Utility functions
-├── App.js                  # Root component
+├── App.tsx                 # Root component
 ├── index.js                # Entry point
 ├── package.json            # Dependencies and scripts
 └── README.md               # Project documentation
@@ -28,44 +25,56 @@ project-name/
 
 ## Key Directories
 
-### `src/api`
+### `src/assets`
 
-Contains all API-related code, including endpoints, interceptors, and response transformers.
+Contains static assets such as images, fonts, and other media files used in the application.
 
 ### `src/components`
 
-Reusable UI components organized by:
-- `common`: Shared across the app (buttons, inputs, etc.)
-- `specific`: Used by specific features
+Reusable UI components that can be used across different screens. Each component is typically defined in its own file with associated styles.
+
+### `src/config`
+
+Configuration files for the application, including API endpoint definitions, environment variables, and other constants.
 
 ### `src/hooks`
 
-Custom React hooks for shared logic.
+Custom React hooks for shared logic, state management, and side effects.
 
 ### `src/navigation`
 
-Navigation configuration using React Navigation.
+Navigation configuration using React Navigation, including drawer navigators, stack navigators, and navigation wrappers.
 
 ### `src/screens`
 
-Screen components organized by feature.
+Screen components organized by authentication state:
+- `PostLogin`: Screens that are accessible after user authentication
+- `PreLogin`: Authentication screens, onboarding, and public screens
+
+Each screen may have its own subdirectory containing the main screen component and related files (e.g., styles, subcomponents).
 
 ### `src/services`
 
-Business logic, data transformation, and other services.
-
-### `src/store`
-
-State management using Redux/Redux Toolkit.
+Business logic, API communication, data transformation, and other services. Typically implemented as singleton classes with specific responsibilities.
 
 ### `src/theme`
 
-Theme definitions including colors, typography, spacing, etc.
+Theme definitions including colors, typography, spacing, and other styling constants.
+
+### `src/types`
+
+TypeScript type definitions, interfaces, and type guards that are shared across the application. This can be a separate directory or included within the config directory depending on the project size.
+
+### `src/utils`
+
+Utility functions and helpers, including API utilities, formatting functions, and other shared logic.
 
 ## Best Practices
 
-1. Use absolute imports with path aliases
-2. Group related files in feature-based directories when appropriate
-3. Keep components small and focused
+1. Use TypeScript for type safety and better developer experience
+2. Implement functional components with React hooks
+3. Keep components small and focused on a single responsibility
 4. Extract business logic into services
-5. Use consistent naming conventions
+5. Use consistent naming conventions (PascalCase for components, camelCase for functions)
+6. Implement proper error handling in API calls and async operations
+7. Use environment-specific configuration when necessary

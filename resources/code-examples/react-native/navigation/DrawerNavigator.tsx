@@ -4,7 +4,7 @@ import { View, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import authService from '../helper/authService';
+import authService from '../services/authService';
 import TabNavigator from './TabNavigator';
 import AboutUsScreen from '../screens/PostLogin/AboutUs/AboutUsScreen';
 import CalendarScreen from '../screens/PostLogin/Calendar/CalendarScreen';

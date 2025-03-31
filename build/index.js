@@ -14,7 +14,7 @@ const RESOURCES_DIR = path.join(BASE_DIR, "resources");
 const CODE_EXAMPLES_DIR = path.join(RESOURCES_DIR, "code-examples");
 // Create server instance
 const server = new McpServer({
-    name: "bluestoneapps-react-native",
+    name: "bluestoneapps",
     version: "0.2.1",
     capabilities: {
         tools: {},
@@ -103,7 +103,7 @@ function listAvailableExamples() {
     const categories = [
         { key: "components", dir: "components" },
         { key: "hooks", dir: "hooks" },
-        { key: "services", dir: "helper" },
+        { key: "services", dir: "services" },
         { key: "screens", dir: "screens" },
         { key: "themes", dir: "theme" }
     ];
@@ -316,10 +316,10 @@ server.tool("get_service_example", "Get a React Native service example", {
     }
     try {
         // First try exact match
-        const result = getExampleContent("helper", service_name);
+        const result = getExampleContent("services", service_name);
         if (result.error) {
             // Try to find by fuzzy match
-            const servicesDir = path.join(CODE_EXAMPLES_DIR, "react-native", "helper");
+            const servicesDir = path.join(CODE_EXAMPLES_DIR, "react-native", "services");
             const closestMatch = findClosestMatch(servicesDir, service_name);
             if (closestMatch) {
                 const fuzzyResult = getExampleContent("helper", closestMatch);
@@ -429,7 +429,7 @@ server.tool("get_screen_example", "Get a React Native screen example", {
     }
 });
 // 9. Get theme example
-server.tool("get_theme_example", "Get a React Native theme example", {
+server.tool("get_theme_example", "Get code for a React Native theme", {
     theme_name: z.string().describe("Theme Name"),
 }, async ({ theme_name }) => {
     if (!theme_name) {
