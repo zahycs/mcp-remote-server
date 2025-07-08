@@ -1,0 +1,72 @@
+# Docker ignore file for MCP Server
+node_modules
+npm-debug.log
+.npm
+.nyc_output
+.coverage
+.cache
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build artifacts
+build/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Git
+.git
+.gitignore
+.github/
+
+# Docker
+docker-compose.yml
+docker-compose.dev.yml
+docker-compose.override.yml
+Dockerfile
+Dockerfile.*
+.dockerignore
+
+# Documentation
+README.md
+*.md
+
+# Test files
+test/
+tests/
+__tests__/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# Development tools
+.eslintrc*
+.prettierrc*
+jest.config.*
+*.config.js
+*.config.ts
+
+# Temporary files
+tmp/
+temp/

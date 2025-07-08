@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bluestoneapps-mcp-server
+    restart: unless-stopped
+    ports:
+      - "8082:8082"
+    environment:
+      - NODE_ENV=production
+      - PORT=8082
+      - HOST=0.0.0.0
+      - DEBUG=false
+    volumes:
+      # Mount resources for easy updates
+      - ./resources:/app/resources:ro
+    networks:
+      - mcp-network
+    labels:
+      - "com.bluestoneapps.service=mcp-server"
+      - "com.bluestoneapps.version=1.0.0"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  mcp-network:
+    driver: bridge

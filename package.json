@@ -12,7 +12,13 @@
     "dev:http": "tsc && node build/index.js --http",
     "clean": "rm -rf build/",
     "rebuild": "npm run clean && npm run build",
-    "test": "node test.mjs"
+    "test": "node test.mjs",
+    "docker:build": "docker build -t bluestoneapps-mcp-server .",
+    "docker:run": "docker run -p 8082:8082 bluestoneapps-mcp-server",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f mcp-server",
+    "docker:exec": "docker-compose exec mcp-server sh"
   },
   "keywords": [
     "mcp",

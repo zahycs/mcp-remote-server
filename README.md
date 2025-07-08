@@ -31,58 +31,50 @@ A Model Context Protocol (MCP) server specifically designed for VSCode GitHub Co
    npm run build
    ```
 
-2. **Start the server (stdio mode for VSCode)**:
+2. **Start the server**:
    ```bash
    npm start
    ```
 
-3. **Start the server (HTTP mode for testing)**:
-   ```bash
-   npm run start:http
-   ```
-
-4. **Development mode** (with debug logging):
+3. **Development mode** (with debug logging):
    ```bash
    DEBUG=true npm run dev
    ```
 
-5. **Development mode (HTTP)**:
+## Docker
+
+### Quick Start with Docker
+
+1. **Using Docker Compose** (recommended):
    ```bash
-   DEBUG=true npm run dev:http
+   npm run docker:up
    ```
 
-## Server Modes
+2. **Using Docker directly**:
+   ```bash
+   npm run docker:build
+   npm run docker:run
+   ```
 
-The server supports two modes:
+### Available Docker Commands
 
-### 1. **Stdio Mode (Default)**
-- Used for VSCode GitHub Copilot integration
-- Communicates via standard input/output
-- Default transport for MCP clients
+- `npm run docker:build` - Build the Docker image
+- `npm run docker:run` - Run the container (port 8082)
+- `npm run docker:up` - Start with Docker Compose (detached)
+- `npm run docker:down` - Stop Docker Compose services
+- `npm run docker:logs` - View container logs
+- `npm run docker:exec` - Execute shell in container
 
-### 2. **HTTP Mode**
-- Used for testing and standalone usage
-- Runs on port 8082 by default
-- Provides basic HTTP endpoint for server status
-- Also maintains stdio transport for MCP communication
+### Docker Configuration
 
-### Configuration
+The containerized server:
+- Runs on port 8082
+- Uses production mode by default
+- Includes health checks
+- Mounts `resources` folder for easy updates
+- Runs as non-root user for security
 
-- **Default Port**: 8082
-- **Host**: localhost (configurable via `HOST` environment variable)
-- **Port**: Configurable via `PORT` environment variable
-
-Examples:
-```bash
-# Use custom port
-PORT=3000 npm run start:http
-
-# Use custom host and port
-HOST=0.0.0.0 PORT=8080 npm run start:http
-
-# Force HTTP mode via environment variable
-MCP_TRANSPORT=http npm start
-```
+For more details, see [DOCKER.md](DOCKER.md).
 
 ## Available Tools
 
@@ -198,13 +190,10 @@ The server is optimized for VSCode GitHub Copilot with:
 
 ### Scripts
 - `npm run build` - Compile TypeScript
-- `npm run start` - Start the server (stdio mode)
-- `npm run start:http` - Start the server (HTTP mode on port 8082)
-- `npm run dev` - Development mode with debug logging (stdio)
-- `npm run dev:http` - Development mode with debug logging (HTTP)
+- `npm run start` - Start the server
+- `npm run dev` - Development mode with debug logging
 - `npm run clean` - Clean build directory
 - `npm run rebuild` - Clean and rebuild
-- `npm run test` - Test the server functionality
 
 ### Debugging
 1. Set `DEBUG=true` environment variable
