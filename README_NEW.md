@@ -31,58 +31,15 @@ A Model Context Protocol (MCP) server specifically designed for VSCode GitHub Co
    npm run build
    ```
 
-2. **Start the server (stdio mode for VSCode)**:
+2. **Start the server**:
    ```bash
    npm start
    ```
 
-3. **Start the server (HTTP mode for testing)**:
-   ```bash
-   npm run start:http
-   ```
-
-4. **Development mode** (with debug logging):
+3. **Development mode** (with debug logging):
    ```bash
    DEBUG=true npm run dev
    ```
-
-5. **Development mode (HTTP)**:
-   ```bash
-   DEBUG=true npm run dev:http
-   ```
-
-## Server Modes
-
-The server supports two modes:
-
-### 1. **Stdio Mode (Default)**
-- Used for VSCode GitHub Copilot integration
-- Communicates via standard input/output
-- Default transport for MCP clients
-
-### 2. **HTTP Mode**
-- Used for testing and standalone usage
-- Runs on port 8082 by default
-- Provides basic HTTP endpoint for server status
-- Also maintains stdio transport for MCP communication
-
-### Configuration
-
-- **Default Port**: 8082
-- **Host**: localhost (configurable via `HOST` environment variable)
-- **Port**: Configurable via `PORT` environment variable
-
-Examples:
-```bash
-# Use custom port
-PORT=3000 npm run start:http
-
-# Use custom host and port
-HOST=0.0.0.0 PORT=8080 npm run start:http
-
-# Force HTTP mode via environment variable
-MCP_TRANSPORT=http npm start
-```
 
 ## Available Tools
 
@@ -198,13 +155,10 @@ The server is optimized for VSCode GitHub Copilot with:
 
 ### Scripts
 - `npm run build` - Compile TypeScript
-- `npm run start` - Start the server (stdio mode)
-- `npm run start:http` - Start the server (HTTP mode on port 8082)
-- `npm run dev` - Development mode with debug logging (stdio)
-- `npm run dev:http` - Development mode with debug logging (HTTP)
+- `npm run start` - Start the server
+- `npm run dev` - Development mode with debug logging
 - `npm run clean` - Clean build directory
 - `npm run rebuild` - Clean and rebuild
-- `npm run test` - Test the server functionality
 
 ### Debugging
 1. Set `DEBUG=true` environment variable
